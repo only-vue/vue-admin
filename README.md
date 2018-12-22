@@ -21,14 +21,11 @@ npm run build
 * config - webpack config files
 * dist - build
 * src -your app
-    * api
-    * assets
-    * common
-    * components - your vue components
-    * mock
-    * styles
-    * views - your pages
-    * vuex
+    * api -接口请求
+    * assets  -资源
+    * components - 公用模块
+    * views - 界面
+    * vuex 
     * App.vue
     * main.js - main file
     * routes.js
@@ -55,3 +52,6 @@ Modern browsers and IE 10+.
 
 # License
 [MIT](http://opensource.org/licenses/MIT)
+
+后续版本会继续更新迭代，如果感觉不错请点赞，谢谢...
+only q:305787768
