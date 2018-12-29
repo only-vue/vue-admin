@@ -7,7 +7,7 @@
 					<el-input v-model="filters.name" placeholder="姓名"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" v-on:click="getUsers">查询</el-button>
+					<el-button type="primary" @click="getListData(page)">查询</el-button>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="handleAdd">新增</el-button>
@@ -16,7 +16,7 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="listData" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
 			<el-table-column type="index" width="60">
@@ -39,12 +39,11 @@
 			</el-table-column>
 		</el-table>
 
-		<!--工具条-->
-		<el-col :span="24" class="toolbar">
-			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
-			</el-pagination>
-		</el-col>
+		<!-- Pagination 分页  
+		     handleCurrentChange分页切换    
+			 batchRemove 批量删除
+	    -->
+		<Pagination  :sels="sels" :total="total" @handleCurrentChange="getListData" @batchRemove="getListData"></Pagination>
 
 		<!--编辑界面-->
 		<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
@@ -105,17 +104,19 @@
 </template>
 
 <script>
-	import util from '../../common/js/util'
-	//import NProgress from 'nprogress'
+	import util from '../../assets/js/util'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-
+    import Pagination from '../../components/pagination.vue'
 	export default {
+		components: {
+			Pagination
+		},
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
+				listData: [],
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -149,7 +150,7 @@
 				addForm: {
 					name: '',
 					sex: -1,
-					age: 0,
+					age: 1,
 					birth: '',
 					addr: ''
 				}
@@ -161,45 +162,37 @@
 			formatSex: function (row, column) {
 				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
 			},
-			handleCurrentChange(val) {
-				this.page = val;
-				this.getUsers();
-			},
 			//获取用户列表
-			getUsers() {
-				let para = {
-					page: this.page,
-					name: this.filters.name
-				};
-				this.listLoading = true;
-				//NProgress.start();
-				getUserListPage(para).then((res) => {
+			getListData(page,paramsMore={}) {
+				let params={
+                      page:page?page:this.page,
+					  name: this.filters.name,
+					  ...paramsMore
+				 }
+				getUserListPage(params).then((res) => {
 					this.total = res.data.total;
-					this.users = res.data.users;
+					this.listData = res.data.users;
 					this.listLoading = false;
-					//NProgress.done();
 				});
 			},
 			//删除
 			handleDel: function (index, row) {
-				this.$confirm('确认删除该记录吗?', '提示', {
-					type: 'warning'
-				}).then(() => {
-					this.listLoading = true;
-					//NProgress.start();
-					let para = { id: row.id };
-					removeUser(para).then((res) => {
-						this.listLoading = false;
-						//NProgress.done();
-						this.$message({
-							message: '删除成功',
-							type: 'success'
+				if(this.sels[0].id==row.id){
+					this.$confirm('确认删除该记录吗?', '提示', {
+						type: 'warning'
+					}).then(() => {
+						this.listLoading = true;
+						let para = { id: row.id };
+						removeUser(para).then((res) => {
+							this.listLoading = false;
+							this.$message({
+								message: '删除成功',
+								type: 'success'
+							});
+							this.getListData();
 						});
-						this.getUsers();
-					});
-				}).catch(() => {
-
-				});
+					})
+				}
 			},
 			//显示编辑界面
 			handleEdit: function (index, row) {
@@ -212,7 +205,7 @@
 				this.addForm = {
 					name: '',
 					sex: -1,
-					age: 0,
+					age: 1,
 					birth: '',
 					addr: ''
 				};
@@ -235,7 +228,7 @@
 								});
 								this.$refs['editForm'].resetFields();
 								this.editFormVisible = false;
-								this.getUsers();
+								this.getListData();
 							});
 						});
 					}
@@ -259,7 +252,7 @@
 								});
 								this.$refs['addForm'].resetFields();
 								this.addFormVisible = false;
-								this.getUsers();
+								this.getListData();
 							});
 						});
 					}
@@ -267,32 +260,10 @@
 			},
 			selsChange: function (sels) {
 				this.sels = sels;
-			},
-			//批量删除
-			batchRemove: function () {
-				var ids = this.sels.map(item => item.id).toString();
-				this.$confirm('确认删除选中记录吗？', '提示', {
-					type: 'warning'
-				}).then(() => {
-					this.listLoading = true;
-					//NProgress.start();
-					let para = { ids: ids };
-					batchRemoveUser(para).then((res) => {
-						this.listLoading = false;
-						//NProgress.done();
-						this.$message({
-							message: '删除成功',
-							type: 'success'
-						});
-						this.getUsers();
-					});
-				}).catch(() => {
-
-				});
 			}
 		},
 		mounted() {
-			this.getUsers();
+			this.getListData();
 		}
 	}
 

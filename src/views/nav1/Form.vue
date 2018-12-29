@@ -49,20 +49,20 @@
 			</el-upload>
 		</el-form-item>
 		<el-form-item label="内容信息">
-			 <UE :defaultMsg=defaultMsg :config=config ref="ue"></UE>
+			 <Ueditor :defaultMsg=defaultMsg :config=config ref="ue"></Ueditor>
 		</el-form-item>
 		<el-form-item>
-			<el-button type="primary">立即创建</el-button>
-			<el-button @click.native.prevent>取消</el-button>
+			<el-button type="primary"  @click="handleSubmit">立即创建</el-button>
+			<el-button>取消</el-button>
 		</el-form-item>
 	</el-form>
 </template>
 
 <script>
-    import UE from '../../components/ueditor.vue';
+    import Ueditor from '../../components/ueditor.vue';
 	export default {
 		components: {
-			UE
+			Ueditor
 		},
 		data() {
 			return {
@@ -91,11 +91,12 @@
 			}
 		},
 		mounted() {
-		
+		  
 		},
 		methods: {
-			onSubmit() {
-				console.log('submit!');
+			handleSubmit() {
+			
+			
 			},
 			handleChange(file, fileList) {
 				this.fileList3 = fileList.slice(-3);

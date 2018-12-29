@@ -25,9 +25,8 @@ export default {
                 }
               });
         }
-
-        Vue.prototype.fmtDate = function(obj){
-            console.log(111)
+        
+        Vue.prototype.FmtDate = function(obj){
             var date = new Date(obj * 1000);
             var y = date.getFullYear();
             var m = date.getMonth() + 1;
@@ -41,7 +40,25 @@ export default {
             minute = minute < 10 ? ('0' + minute) : minute;
             second = second < 10 ? ('0' + second) : second;
             return y + '-' + m + '-' + d+' '+h+':'+minute;
-            }
+        }
+          
+        /**
+         *  AuthCode 短信倒计时
+         *  sendAuthCode 发送状态
+         *  authTime 倒计时时间
+         */
+        Vue.prototype.AuthCode = function(){
+            this.sendAuthCode = false;
+            var authTimetimer = setInterval(()=>{
+                this.authTime--;
+                if(this.authTime<=0){
+                    this.sendAuthCode = true;
+                    this.authTime = this.authTime;
+                    clearInterval(authTimetimer);
+                }
+            }, 1000);
+           
+        }
      
   
     }

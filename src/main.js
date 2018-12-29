@@ -16,7 +16,7 @@ import store from './vuex/store'
 import Vuex from 'vuex'
 
 //router
-import router from './router'
+import router from './router/index'
 
 //ueditor
 import '../static/UE/ueditor.config.js'
