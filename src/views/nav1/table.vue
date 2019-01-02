@@ -15,7 +15,11 @@
 			</el-form>
 		</el-col>
 
-		<!--列表-->
+		<!-- 
+          List 列表
+		  columns 数据
+		  control 控制项       
+    		-->
 		<el-table :data="listData" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
 			<el-table-column label="操作" width="150">
 				<template scope="scope">
@@ -27,6 +31,9 @@
 		</el-table>
 
 		<!-- Pagination 分页  
+		     control 控制项
+			 sels 选中
+             total 总计
 		     handleCurrentChange分页切换    
 			 batchRemove 批量删除
 	    -->
