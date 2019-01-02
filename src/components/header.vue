@@ -14,7 +14,7 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>我的消息</el-dropdown-item>
               <el-dropdown-item>设置</el-dropdown-item>
-              <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+              <el-dropdown-item divided @click.native="callbackLogin">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -30,19 +30,17 @@
     },
     props:['collapsed'],
     mounted() {
-      this.user = JSON.parse(sessionStorage.getItem('user'))
+      this.user = JSON.parse(this.getStorage('user'))
     },
     methods: {
 			//退出登录
-			logout () {
+			callbackLogin () {
 				this.$confirm('确认退出吗?', '提示', {
-					//type: 'warning'
+					type: 'warning'
 				}).then(() => {
-					sessionStorage.removeItem('user');
+					this.removeStorage('user')
 					this.$router.push('/login');
-				}).catch(() => {
-
-				});
+				})
 			},
       handleCollapse(){
 				this.$emit('handleCollapse')

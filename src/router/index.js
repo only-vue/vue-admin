@@ -29,21 +29,21 @@ var router =  new VueRouter({
 })
 
 
-//router拦截
+/**
+ * router拦截 
+ * nextRoute 路由权限
+ * 
+ *  */ 
 router.beforeEach((to, from, next) => {
     let user = JSON.parse(sessionStorage.getItem('user'));
     if(user){
         const nextRoute = []; //'主页', '菜单一'
         routes.map((item,index)=>{
-            if (nextRoute.indexOf(item.name) >= 0) {
-                item.hidden=true
-            }
+            nextRoute.indexOf(item.name) >= 0?item.hidden=true:''
         })
     }
-    if (to.path == '/login') {
-        sessionStorage.removeItem('user');
-    }
-    next()
+    !user && to.path != '/login'?next({ path: '/login' }):next()
+   
 })  
 
 export default router;

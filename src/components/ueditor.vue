@@ -5,7 +5,7 @@
 </template>
 <script>
   export default {
-    name: 'UE',
+    name: 'ueditor',
     data () {
       return {
         editor: null

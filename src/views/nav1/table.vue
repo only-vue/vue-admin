@@ -17,33 +17,20 @@
 
 		<!--列表-->
 		<el-table :data="listData" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
-			<el-table-column type="selection" width="55">
-			</el-table-column>
-			<el-table-column type="index" width="60">
-			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
-			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
-			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
-			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
-			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
-			</el-table-column>
 			<el-table-column label="操作" width="150">
 				<template scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
+			<List :control="control" :columns="columns"></List>
 		</el-table>
 
 		<!-- Pagination 分页  
 		     handleCurrentChange分页切换    
 			 batchRemove 批量删除
 	    -->
-		<Pagination  :sels="sels" :total="total" @handleCurrentChange="getListData" @batchRemove="getListData"></Pagination>
+		<Pagination :control="control" :sels="sels" :total="total" @handleCurrentChange="getListData" @batchRemove="getListData"></Pagination>
 
 		<!--编辑界面-->
 		<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
@@ -106,9 +93,11 @@
 <script>
 	import util from '../../assets/js/util'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
+	import List from '../../components/list.vue'
     import Pagination from '../../components/pagination.vue'
 	export default {
 		components: {
+			List,
 			Pagination
 		},
 		data() {
@@ -116,6 +105,31 @@
 				filters: {
 					name: ''
 				},
+				control:{
+				  selection:true, //开启复选框
+				  rank:true //开启序号
+				},
+				columns:[
+					{
+					  prop:'name',
+					  label:'姓名'
+					},
+					{
+					  prop:'sex',
+					  label:'性别',
+					},{
+					  prop:'age',
+					  label:'年龄',
+					},
+					{
+					  prop:'birth',
+					  label:'生日',
+					},
+					{
+					  prop:'addr',
+					  label:'地址'
+					}
+				],
 				listData: [],
 				total: 0,
 				page: 1,
@@ -159,11 +173,14 @@
 		},
 		methods: {
 			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			handleColumn: function (data) {
+				 data.map(item=>{
+					item.sex == 1 ? item.sex ='男' : item.sex == 0 ? item.sex ='女' : item.sex ='未知'
+				 });
 			},
 			//获取用户列表
 			getListData(page,paramsMore={}) {
+				this.listLoading = true;
 				let params={
                       page:page?page:this.page,
 					  name: this.filters.name,
@@ -171,13 +188,14 @@
 				 }
 				getUserListPage(params).then((res) => {
 					this.total = res.data.total;
-					this.listData = res.data.users;
+					this.handleColumn(res.data.users)
+					this.listData=res.data.users
 					this.listLoading = false;
 				});
 			},
 			//删除
-			handleDel: function (index, row) {
-				if(this.sels[0].id==row.id){
+			handleDel (index, row) {
+				if(this.sels.length>0?this.sels[0].id==row.id:''){
 					this.$confirm('确认删除该记录吗?', '提示', {
 						type: 'warning'
 					}).then(() => {

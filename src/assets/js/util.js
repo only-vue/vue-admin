@@ -15,6 +15,12 @@ export default {
             this.$message(obj);
         }
 
+        /**
+         * 弹出窗
+         * callback 返回函数
+         * 
+         */
+
         Vue.prototype.MessageBox=function(title,message,callback){
             this.$alert(message, title?title:'提示', {
                 confirmButtonText: '确定',
@@ -25,6 +31,12 @@ export default {
                 }
               });
         }
+
+        /**
+         * 时间戳转成时间格式
+         * xxxx-xx-xx
+         * 
+         */
         
         Vue.prototype.FmtDate = function(obj){
             var date = new Date(obj * 1000);
@@ -40,6 +52,23 @@ export default {
             minute = minute < 10 ? ('0' + minute) : minute;
             second = second < 10 ? ('0' + second) : second;
             return y + '-' + m + '-' + d+' '+h+':'+minute;
+        }
+
+        /**
+         * setStorage 存储
+         * getStorage 取到
+         * removeStorage 移除
+         */
+        Vue.prototype.setStorage = function(name,val){
+            sessionStorage.setItem(name,val);
+        }
+
+        Vue.prototype.getStorage = function(val){
+            return sessionStorage.getItem(val)
+        }
+
+        Vue.prototype.removeStorage = function(val){
+            sessionStorage.removeItem(val)
         }
           
         /**

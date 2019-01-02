@@ -48,7 +48,7 @@
             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             requestLogin(loginParams).then(data => {
                 this.logining = false;
-                sessionStorage.setItem('user', JSON.stringify(data.user));
+                this.setStorage('user', JSON.stringify(data.user))
                 this.$router.push({ path: '/main' });
             });
           } else {
