@@ -20,6 +20,7 @@ let routes = [
           children: [
               { path: '/table', component: (resolve) => require(['../views/nav1/table.vue'], resolve), name: '列表' },
               { path: '/form', component: (resolve) => require(['../views/nav1/form.vue'], resolve), name: '表单' },
+              { path: '/tab', component: (resolve) => require(['../views/nav1/tab.vue'], resolve), name: 'tab' }
           
           ]
       },

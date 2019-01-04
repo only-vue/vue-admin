@@ -21,6 +21,7 @@
       </el-col>
 </template>
 <script>
+ import { storage } from '../assets/js/util.js';
   export default {
     data () {
       return {
@@ -30,7 +31,7 @@
     },
     props:['collapsed'],
     mounted() {
-      this.user = JSON.parse(this.getStorage('user'))
+      this.user = JSON.parse(storage.getStorage('user'))
     },
     methods: {
 			//退出登录
@@ -38,7 +39,7 @@
 				this.$confirm('确认退出吗?', '提示', {
 					type: 'warning'
 				}).then(() => {
-					this.removeStorage('user')
+					storage.removeStorage('user')
 					this.$router.push('/login');
 				})
 			},

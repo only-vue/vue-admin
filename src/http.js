@@ -1,5 +1,7 @@
 import axios from 'axios';
 import router from './router'
+import { Notification,Message,MessageBox} from 'element-ui';
+import { storage } from './assets/js/util.js';
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL = 'https://www.apiopen.top';
@@ -7,7 +9,7 @@ axios.defaults.baseURL = 'https://www.apiopen.top';
 //http request 拦截器
 axios.interceptors.request.use(
   config => {
-    // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
+    const token = storage.getStorage('token')
     config.data = JSON.stringify(config.data);
     // config.headers = {
     //   'Content-Type':'application/x-www-form-urlencoded'

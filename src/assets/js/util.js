@@ -1,9 +1,30 @@
 
 import { Notification,Message,MessageBox} from 'element-ui';
 
-export default {
-    install:function(Vue,options,){
+/**
+ * setStorage 存储
+ * getStorage 取到
+ * removeStorage 移除
+ */
+export const storage = {
+    setStorage:(name,val)=>{
+        sessionStorage.setItem(name,val);
+    },
 
+    getStorage:(val)=>{
+        return sessionStorage.getItem(val)
+    },
+    removeStorage:(val)=>{
+        sessionStorage.removeItem(val)
+    }
+}
+/**
+ * vue 挂载
+ * this...
+ */
+
+export default {
+    install:function(Vue,options){
         Vue.prototype.Notification=function(title,message){
            this.$notify({
                title: title?title:'提示',
@@ -54,22 +75,7 @@ export default {
             return y + '-' + m + '-' + d+' '+h+':'+minute;
         }
 
-        /**
-         * setStorage 存储
-         * getStorage 取到
-         * removeStorage 移除
-         */
-        Vue.prototype.setStorage = function(name,val){
-            sessionStorage.setItem(name,val);
-        }
-
-        Vue.prototype.getStorage = function(val){
-            return sessionStorage.getItem(val)
-        }
-
-        Vue.prototype.removeStorage = function(val){
-            sessionStorage.removeItem(val)
-        }
+       
           
         /**
          *  AuthCode 短信倒计时

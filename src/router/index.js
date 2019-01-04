@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Router from '../router/router'
+import { storage } from '../assets/js/util.js';
 
 import Login from '../views/login.vue'
 import No404 from '../views/404.vue'
@@ -35,7 +36,7 @@ var router =  new VueRouter({
  * 
  *  */ 
 router.beforeEach((to, from, next) => {
-    let user = JSON.parse(sessionStorage.getItem('user'));
+    let user = JSON.parse(storage.getStorage('user'));
     if(user){
         const nextRoute = []; //'主页', '菜单一'
         routes.map((item,index)=>{

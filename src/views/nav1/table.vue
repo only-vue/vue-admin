@@ -17,8 +17,8 @@
 
 		<!-- 
           List 列表
-		  columns 数据
-		  control 控制项       
+		  columns 数据列
+		  control 控制器       
     		-->
 		<el-table :data="listData" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
 			<el-table-column label="操作" width="150">
@@ -181,9 +181,7 @@
 		methods: {
 			//性别显示转换
 			handleColumn: function (data) {
-				 data.map(item=>{
-					item.sex == 1 ? item.sex ='男' : item.sex == 0 ? item.sex ='女' : item.sex ='未知'
-				 });
+				 data.map(item=>item.sex=item.sex == 1 ?'男' : item.sex == 0 ? '女' : '未知');
 			},
 			//获取用户列表
 			getListData(page,paramsMore={}) {

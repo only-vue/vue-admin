@@ -19,6 +19,7 @@
 
 <script>
   import { requestLogin } from '../api/api';
+  import { storage } from '../assets/js/util.js';
   export default {
     data() {
       return {
@@ -48,7 +49,7 @@
             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             requestLogin(loginParams).then(data => {
                 this.logining = false;
-                this.setStorage('user', JSON.stringify(data.user))
+                storage.setStorage('user',JSON.stringify(data.user))
                 this.$router.push({ path: '/main' });
             });
           } else {

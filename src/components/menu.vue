@@ -16,7 +16,7 @@
 		</el-menu>
 		<!--导航菜单-折叠后-->
 		<ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-			<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
+			<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item" :key="index">
 				<template>
 					<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)"
 					     @mouseout="showMenu(index,false)">
@@ -48,7 +48,6 @@
     },
     methods: {
 		showMenu(i,status){
-			console.log(i)
 			this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
 		}
     }

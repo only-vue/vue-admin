@@ -9,6 +9,7 @@ import 'font-awesome/css/font-awesome.min.css'
 //import './assets/theme/theme-green/index.css'
 
 //util
+import './assets/css/base.css'
 import util from './assets/js/util.js'
 
 //Vuex

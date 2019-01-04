@@ -1,6 +1,6 @@
 <template>
-	<el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="margin:20px;width:60%;min-width:600px;">
-		<el-form-item label="活动名称">
+	<el-form ref="form" :model="form" :rules="rules" label-width="80px" class="form">
+		<el-form-item label="活动名称" prop="name">
 			<el-input v-model="form.name"></el-input>
 		</el-form-item>
 		<el-form-item label="活动区域">
@@ -52,14 +52,15 @@
 			 <Ueditor :defaultMsg=defaultMsg :config=config ref="ue"></Ueditor>
 		</el-form-item>
 		<el-form-item>
-			<el-button type="primary"  @click="handleSubmit">立即创建</el-button>
+			<el-button type="primary"  @click="handleSubmit('form')">立即创建</el-button>
 			<el-button>取消</el-button>
 		</el-form-item>
 	</el-form>
 </template>
 
 <script>
-    import Ueditor from '../../components/ueditor.vue';
+	import Ueditor from '../../components/ueditor.vue';
+	import {Rule} from '../../assets/js/rule.js';
 	export default {
 		components: {
 			Ueditor
@@ -87,15 +88,24 @@
 					type: [],
 					resource: '',
 					desc: ''
+				},
+				rules:{
+					name:[
+					  Rule.checkDataNull('姓名不能为空','blur')
+					]
 				}
 			}
 		},
 		mounted() {
-		  
+		
 		},
 		methods: {
-			handleSubmit() {
-			
+			handleSubmit(form) {
+			 this.$refs[form].validate((valid) => {
+				if (valid) {
+					alert('submit!');
+				}
+			});
 			
 			},
 			handleChange(file, fileList) {
