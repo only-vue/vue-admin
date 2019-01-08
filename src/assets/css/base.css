@@ -4,3 +4,17 @@
     width:60%;
     min-width:600px;
 }
+
+.area-select .area-selected-trigger {
+    padding: 0 20px 7px 12px!important;
+}
+.cascader-menu-list .cascader-menu-option.selected{
+    color: #20a0ff!important;
+}
+.area-select.large,.el-date-editor.el-input,.el-select{
+    width: 100%!important;
+}
+
+.el-date-picker{
+    width: 300px!important;
+}

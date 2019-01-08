@@ -18,8 +18,8 @@
 </template>
 
 <script>
-  import { requestLogin } from '../api/api';
-  import { storage } from '../assets/js/util.js';
+  import { requestLogin } from '@/api/api';
+  import { storage } from '@/assets/js/util.js';
   export default {
     data() {
       return {

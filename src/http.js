@@ -4,7 +4,8 @@ import { Notification,Message,MessageBox} from 'element-ui';
 import { storage } from './assets/js/util.js';
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = 'https://www.apiopen.top';
+
+axios.defaults.baseURL = window.host?window.host:window.devHost;
 
 //http request 拦截器
 axios.interceptors.request.use(

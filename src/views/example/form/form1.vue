@@ -59,8 +59,8 @@
 </template>
 
 <script>
-	import Ueditor from '../../components/ueditor.vue';
-	import {Rule} from '../../assets/js/rule.js';
+	import Ueditor from '@/components/ueditor.vue';
+	import { Rule } from '@/assets/js/rule.js';
 	export default {
 		components: {
 			Ueditor

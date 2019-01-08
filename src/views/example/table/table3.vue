@@ -98,10 +98,10 @@
 </template>
 
 <script>
-	import util from '../../assets/js/util'
-	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-	import List from '../../components/list.vue'
-    import Pagination from '../../components/pagination.vue'
+	import util from '@/assets/js/util'
+	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '@/api/api';
+	import List from '@/components/list.vue'
+    import Pagination from '@/components/pagination.vue'
 	export default {
 		components: {
 			List,

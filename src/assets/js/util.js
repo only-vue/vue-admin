@@ -18,6 +18,38 @@ export const storage = {
         sessionStorage.removeItem(val)
     }
 }
+
+/**
+ * 列表配置控制器
+ * page 分页
+ * total 总共条数
+ * selection 开启复选框
+ * rank 开启序号
+ */
+export const ListConfig = {
+    page:1,
+    total:0,
+    state1:{
+        selection:true, 
+        rank:true 
+    },
+    state2:{
+        selection:true,
+        rank:false 
+    },
+    state3:{
+        selection:false, 
+        rank:true
+    },
+    state4:{
+        selection:false,
+        rank:false 
+    }
+}
+
+
+
+
 /**
  * vue 挂载
  * this...
@@ -73,6 +105,15 @@ export default {
             minute = minute < 10 ? ('0' + minute) : minute;
             second = second < 10 ? ('0' + second) : second;
             return y + '-' + m + '-' + d+' '+h+':'+minute;
+        }
+
+         /**
+         * 返回上一页
+         * -1,-2,-3
+         * 
+         */
+        Vue.prototype.Back = function(){
+            this.$router.back(-1)
         }
 
        

@@ -8,22 +8,52 @@ let routes = [
         iconCls: 'el-icon-menu',
         hidden: false,
         children:[
-            { path: '/main', component: (resolve) => require(['../views/home/home.vue'], resolve), name: '主页' }, 
+            { path: '/main', component: (resolve) => require(['../views/home/home.vue'], resolve), name: '主页', hidden: false }, 
         ]
       },
+      
       {
           path: '/',
           component: Layout,
-          name: '菜单一',
-          iconCls: 'el-icon-message',
+          name: '列表',
+          iconCls: 'el-icon-document',
           hidden: false,
           children: [
-              { path: '/table', component: (resolve) => require(['../views/nav1/table.vue'], resolve), name: '列表' },
-              { path: '/form', component: (resolve) => require(['../views/nav1/form.vue'], resolve), name: '表单' },
-              { path: '/tab', component: (resolve) => require(['../views/nav1/tab.vue'], resolve), name: 'tab' }
-          
+              { path: '/table1', component: (resolve) => require(['../views/example/table/table1.vue'], resolve), name: '列表1', hidden: false },
+              { 
+                path: '/table2', 
+                component: (resolve) => require(['../views/example/table/table2.vue'], resolve), 
+                name: '列表2', 
+                hidden: false,
+                children:[
+                    { path: 'edit', component: (resolve) => require(['../views/example/table/detail/edit.vue'], resolve), name: '编辑', hidden: true },
+                    { path: 'add', component: (resolve) => require(['../views/example/table/detail/add.vue'], resolve), name: '新增', hidden: true }
+                ] 
+            },
+            { path: '/table3', component: (resolve) => require(['../views/example/table/table3.vue'], resolve), name: '列表3', hidden: false },
           ]
       },
+      {
+        path: '/',
+        component: Layout,
+        name: '表单',
+        iconCls: 'el-icon-message',
+        hidden: false,
+        children: [
+            { path: '/form', component: (resolve) => require(['../views/example/form/form1.vue'], resolve), name: '表单1', hidden: false }
+        ]
+      },
+      {
+        path: '/',
+        component: Layout,
+        name: 'tab切换',
+        iconCls: 'el-icon-setting',
+        hidden: false,
+        children: [
+            { path: '/tab', component: (resolve) => require(['../views/example/tab/index.vue'], resolve), name: 'tab切换', hidden: false }
+           
+        ]
+     },
       {
           path: '/',
           component: Layout,
@@ -31,7 +61,7 @@ let routes = [
           iconCls: 'fa fa-bar-chart',
           hidden: false,
           children: [
-              { path: '/echarts', component: (resolve) => require(['../views/charts/echarts.vue'], resolve), name: 'echarts' }
+              { path: 'echarts', component: (resolve) => require(['../views/example/charts/echarts.vue'], resolve), name: 'echarts', hidden: false }
           ]
       }
 ];

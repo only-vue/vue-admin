@@ -10,12 +10,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "area-data": "^5.0.6",
     "axios": "^0.15.3",
     "echarts": "^3.3.2",
     "element-ui": "^1.2.8",
     "font-awesome": "^4.7.0",
     "nprogress": "^0.2.0",
     "vue": "^2.2.2",
+    "vue-area-linkage": "^5.1.0",
     "vue-router": "^2.3.0",
     "vuex": "^2.0.0-rc.6"
   },

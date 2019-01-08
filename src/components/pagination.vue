@@ -1,8 +1,23 @@
 <template>
+     <!--
+         control 控制器 
+				 total 总数
+				 sels 选中  针对批量删除
+
+		  -->
     <el-col :span="24" class="toolbar">
-		<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" v-if="control.selection">批量删除</el-button>
-		<el-pagination layout="total, prev, pager, next, jumper" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
-		</el-pagination>
+		    <el-button type="danger"
+				   @click="batchRemove" 
+					 :disabled="this.sels.length===0" 
+					 v-if="control?control.selection:false">
+					批量删除
+				</el-button>
+	    	<el-pagination layout="total, prev, pager, next, jumper"
+				    @current-change="handleCurrentChange" 
+						:page-size="20"
+						:total="total" 
+						style="float:right;">
+	    	</el-pagination>
 	</el-col>
 </template>
 <script>

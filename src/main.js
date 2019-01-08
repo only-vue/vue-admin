@@ -25,6 +25,10 @@ import '../static/ueditor/ueditor.all.min.js'
 import '../static/ueditor/lang/zh-cn/zh-cn.js'
 import '../static/ueditor/ueditor.parse.min.js'
 
+//vue-area-linkage 省市区联动选择
+import 'vue-area-linkage/dist/index.css';
+import VueAreaLinkage from 'vue-area-linkage';
+
 //Mock
 import Mock from './mock'
 Mock.bootstrap();
@@ -35,6 +39,7 @@ Vue.prototype.$post=post;
 Vue.prototype.$get=get;
 
 Vue.use(ElementUI)
+Vue.use(VueAreaLinkage)
 Vue.use(util)
 Vue.use(Vuex)
 

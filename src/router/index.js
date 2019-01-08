@@ -38,8 +38,13 @@ var router =  new VueRouter({
 router.beforeEach((to, from, next) => {
     let user = JSON.parse(storage.getStorage('user'));
     if(user){
-        const nextRoute = []; //'主页', '菜单一'
+        const nextRoute = []; //'主页', '列表'
         routes.map((item,index)=>{
+            if(item.children){
+              item.children.map((child,key)=>{
+                nextRoute.indexOf(child.name) >= 0?child.hidden=true:''
+              })
+            }
             nextRoute.indexOf(item.name) >= 0?item.hidden=true:''
         })
     }

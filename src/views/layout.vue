@@ -6,16 +6,18 @@
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<strong class="title">{{$route.name}}</strong>
+						<strong class="title">
+							{{$route.name}}
+						</strong>
 						<el-breadcrumb separator="/" class="breadcrumb-inner">
-							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
+							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path" :to="{ path: item.path }">
 								{{ item.name }}
 							</el-breadcrumb-item>
 						</el-breadcrumb>
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
-							<router-view></router-view>
+							<router-view :key="key"></router-view>
 						</transition>
 					</el-col>
 				</div>
@@ -25,8 +27,8 @@
 </template>
 
 <script>
-	import Header from '../components/header.vue'
-	import Menu from '../components/menu.vue'
+	import Header from '@/components/header.vue'
+	import Menu from '@/components/menu.vue'
 	export default {
 		components: {
 			Header,
@@ -37,6 +39,11 @@
 				collapsed:false //导航收缩状态
 			}
 		},
+		computed:{
+			key(){
+				return this.$route.path + Math.random();
+			}
+		},
 		methods: {
 			//折叠导航栏
 			collapse(){
@@ -44,6 +51,7 @@
 			}
 		},
 		mounted() {
+			
 			// this.$post('/novelApi')
 			// .then((response) => {
 			// 	console.log(response)

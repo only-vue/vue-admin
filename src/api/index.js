@@ -3,7 +3,7 @@ import * as api from './api';
 export default api;
 
 
-const config={
+export const config={
     api:{  //api请求地址
        index:'/main/init' //首页 
 

@@ -2,11 +2,11 @@
      <Tab :currentName="currentName" :title="title" :currentView="currentView"></Tab>
 </template>
 <script>
-	import Tab from '../../components/tab.vue'
-	import UesrManage from './tab/uesrManage.vue'
-	import ConfigManage from './tab/configManage.vue'
-	import RoleManage from './tab/roleManage.vue'
-	import TalkTime from './tab/talkTime.vue'
+	import Tab from '@/components/tab.vue'
+	import UesrManage from './uesrManage.vue'
+	import ConfigManage from './configManage.vue'
+	import RoleManage from './roleManage.vue'
+	import TalkTime from './talkTime.vue'
 	export default {
 		components: {
 			Tab
