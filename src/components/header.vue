@@ -1,37 +1,70 @@
 <template>
-      <el-col :span="24" class="header">
-        <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-          {{collapsed?'':sysName}}
-        </el-col>
-        <el-col :span="10">
-          <div class="tools" @click.prevent="handleCollapse">
-            <i class="fa fa-align-justify"></i>
-          </div>
-        </el-col>
-        <el-col :span="4" class="userinfo">
-          <el-dropdown trigger="hover">
-            <span class="el-dropdown-link userinfo-inner"><img :src="user.avatar" /> {{user.name}}</span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>我的消息</el-dropdown-item>
-              <el-dropdown-item>设置</el-dropdown-item>
-              <el-dropdown-item divided @click.native="callbackLogin">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
-      </el-col>
+     <section>
+        <el-col :span="24" class="header">
+					<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+						{{collapsed?'':sysName}}
+					</el-col>
+					<el-col :span="10">
+						<div class="tools" @click.prevent="handleCollapse">
+							<i class="fa fa-align-justify"></i>
+						</div>
+					</el-col>
+					<el-col :span="4" class="userinfo">
+						<el-dropdown trigger="hover">
+							<span class="el-dropdown-link userinfo-inner"><img :src="user.avatar" /> {{user.name}}</span>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item>我的消息	<el-badge :value="12"></el-badge></el-dropdown-item>
+								<el-dropdown-item @click.native="$refs.updataPassWord.show=true">修改密码</el-dropdown-item>
+								<el-dropdown-item divided @click.native="callbackLogin">退出登录</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+					</el-col>
+       </el-col>
+        <Dialog :dialogShow="false" :dialogBtns="true" title="修改密码" @handleSave="handleSave" ref="updataPassWord">
+				    <el-form ref="form" :model="form" :rules="rules" label-width="80px" slot="main">
+								<el-form-item label="新密码" prop="pass">
+									<el-input v-model="form.pass" type="password" placeholder="请输入新密码"  ></el-input>
+								</el-form-item>
+								<el-form-item label="再次输入" prop="again">
+									<el-input v-model="form.again" type="password" placeholder="请输入再次输入新密码"  ></el-input>
+								</el-form-item>
+						</el-form>
+			  </Dialog>
+		 </section>
 </template>
+
+
 <script>
  import { storage } from '../assets/js/util.js';
+ import { Rule } from '@/assets/js/rule.js'
+ import Dialog from '@/components/dialog.vue'
   export default {
+		components: {
+			Dialog
+		},
+		template:'#updataPassWord',
     data () {
       return {
          sysName:'VUEADMIN',
-         user:{}
+				 user:{},
+				 form:{
+					 pass:'',
+					 again:''
+				 },
+					rules:{
+						pass:[
+							Rule.checkDataNull('请输入新密码','blur')
+						],
+						again:[
+							Rule.checkDataNull('请再次输入新密码','blur'),
+							Rule.checkDataValidate(this)
+						]
+					}
       }
     },
-    props:['collapsed'],
+		props:['collapsed'],
     mounted() {
-      this.user = JSON.parse(storage.getStorage('user'))
+			this.user = JSON.parse(storage.getStorage('user'));
     },
     methods: {
 			//退出登录
@@ -39,10 +72,19 @@
 				this.$confirm('确认退出吗?', '提示', {
 					type: 'warning'
 				}).then(() => {
-					storage.removeStorage('user')
+					storage.removeStorage('user');
 					this.$router.push('/login');
 				})
 			},
+			//修改密码--提交
+			handleSave(){
+				this.$refs.form.validate((valid) => {
+					if (valid) {
+						this.dialogShow=false;
+					}
+				});
+			},
+			//收缩
       handleCollapse(){
 				this.$emit('handleCollapse')
 			}    
@@ -103,5 +145,7 @@
 				line-height: 60px;
 				cursor: pointer;
 			}
+		
 		}
+		
 </style>

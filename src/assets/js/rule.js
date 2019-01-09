@@ -157,6 +157,22 @@ export const Rule={
             }, 
             trigger: 'blur'
         }
+    },
+    /**
+     * checkDataValidate 验证密码两次输入匹配
+     */
+    checkDataValidate:(obj)=>{
+        return { 
+            required: true,
+            validator: (rule, value,callback)=>{
+                if(obj.form.pass!==value){
+                  callback(new Error('两次密码不匹配'))
+                }else{
+                    callback()
+                }
+            }, 
+            trigger: 'blur'
+        }
     }
 
 }

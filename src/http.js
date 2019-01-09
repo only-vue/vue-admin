@@ -59,7 +59,7 @@ export function get(url,params={}){
       resolve(response.data);
     })
     .catch(err => {
-      reject(err)
+      this.Notification('提示','请稍候再试!')
     })
   })
 }
@@ -77,7 +77,8 @@ export function get(url,params={}){
      axios.post(url,data)
           .then(response => {
             resolve(response.data);
-          },err => {
+          })
+          .catch(err => {
             this.Notification('提示','请稍候再试!')
           })
    })

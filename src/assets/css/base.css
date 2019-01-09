@@ -2,7 +2,7 @@
 .form{
     margin:20px;
     width:60%;
-    min-width:600px;
+    min-width:300px;
 }
 
 .area-select .area-selected-trigger {
@@ -17,4 +17,9 @@
 
 .el-date-picker{
     width: 300px!important;
+}
+
+.dialog-footer{
+    float: right;
+    margin-bottom: 20px;
 }

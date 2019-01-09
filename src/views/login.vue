@@ -20,6 +20,7 @@
 <script>
   import { requestLogin } from '@/api/api';
   import { storage } from '@/assets/js/util.js';
+  import { Rule } from '@/assets/js/rule.js';
   export default {
     data() {
       return {
@@ -30,12 +31,10 @@
         },
         rules2: {
           account: [
-            { required: true, message: '请输入账号', trigger: 'blur' },
-            //{ validator: validaePass }
+             Rule.checkDataNull('请输入账号','blur')
           ],
           checkPass: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            //{ validator: validaePass2 }
+             Rule.checkDataNull('请输入密码','blur')
           ]
         },
         checked: true

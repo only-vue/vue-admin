@@ -47,7 +47,7 @@
 	import {util,ListConfig,storage} from '@/assets/js/util'
 	import { getUserListPage } from '@/api/api';
 	import List from '@/components/list.vue'
-    import Pagination from '@/components/pagination.vue'
+  import Pagination from '@/components/pagination.vue'
 	export default {
 		components: {
 			List,
