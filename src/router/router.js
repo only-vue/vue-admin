@@ -19,18 +19,17 @@ let routes = [
           iconCls: 'el-icon-document',
           hidden: false,
           children: [
-              { path: '/table1', component: (resolve) => require(['../views/example/table/table1.vue'], resolve), name: '列表1', hidden: false },
-              { 
-                path: '/table2', 
-                component: (resolve) => require(['../views/example/table/table2.vue'], resolve), 
-                name: '列表2', 
-                hidden: false,
-                children:[
-                    { path: 'edit', component: (resolve) => require(['../views/example/table/detail/edit.vue'], resolve), name: '编辑', hidden: true },
-                    { path: 'add', component: (resolve) => require(['../views/example/table/detail/add.vue'], resolve), name: '新增', hidden: true }
-                ] 
-            },
-            { path: '/table3', component: (resolve) => require(['../views/example/table/table3.vue'], resolve), name: '列表3', hidden: false },
+							{ 
+							path: '/table1', 
+							component: (resolve) => require(['../views/example/table/table1.vue'], resolve), 
+							name: '列表1', 
+							hidden: false,
+							children:[
+								{ path: 'edit', component: (resolve) => require(['../views/example/table/detail/edit.vue'], resolve), name: '编辑', hidden: true },
+								{ path: 'add', component: (resolve) => require(['../views/example/table/detail/add.vue'], resolve), name: '新增', hidden: true }
+							] 
+						}
+            
           ]
       },
       {

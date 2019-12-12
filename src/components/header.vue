@@ -35,8 +35,8 @@
 
 
 <script>
- import { storage } from '../assets/js/util.js';
- import { Rule } from '@/assets/js/rule.js'
+ import { storage } from '@/utils/util.js';
+ import { Rule } from '@/utils/rule.js'
  import Dialog from '@/components/dialog.vue'
   export default {
 		components: {

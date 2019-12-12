@@ -27,8 +27,8 @@
 
 <script>
     import Cascader from '@/components/cascader.vue' 
-    import { storage } from '@/assets/js/util'
-	import { Rule } from '@/assets/js/rule.js'
+    import { storage } from '@/utils/util.js'
+	import { Rule } from '@/utils/rule.js'
 	export default {
 		components: {
 			Cascader

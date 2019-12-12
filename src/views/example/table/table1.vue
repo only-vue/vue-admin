@@ -1,109 +1,108 @@
 <template>
-	<section>
-		<!--工具条-->
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-			<el-form :inline="true" :model="filters">
-				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="getListData(page)">查询</el-button>
-				</el-form-item>
-			</el-form>
-		</el-col>
+    <section>
+        <!--工具条-->
+        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+            <el-form :inline="true" :model="filters">
+                <el-form-item>
+                    <el-input v-model="filters.name" placeholder="姓名"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="getListData(page)">查询</el-button>
+                </el-form-item>
+            </el-form>
+        </el-col>
 
-		<!-- 
-          List 列表
-		  columns 数据列
-		  control 控制器       
-    		-->
-		<el-table :data="listData" highlight-current-row v-loading="listLoading" style="width: 100%;">
-			<List :control="control" :columns="columns"></List>
-		</el-table>
-
-		<!-- Pagination 分页  
-		     control 控制项
-			 sels 选中
-             total 总计
-		     handleCurrentChange分页切换    
-			 batchRemove 批量删除
-	    -->
-		<Pagination :total="total" @handleCurrentChange="getListData" @batchRemove="getListData"></Pagination>		
-	</section>
+        <!-- 
+					tableData 数据
+					columns 数据列
+					operation 操作项  
+					pagination  分页控制器     
+        -->
+        <Table 
+				:columns="columns" 
+				:tableData="tableData" 
+				:pagination="pagination" 
+				:operation="operation"
+				/>
+    </section>
 </template>
 
 <script>
-	import {util,ListConfig} from '@/assets/js/util'
-	import { getUserListPage } from '@/api/api';
-	import List from '@/components/list.vue'
-  import Pagination from '@/components/pagination.vue'
-	export default {
-		components: {
-			List,
-			Pagination
-		},
-		data() {
-			return {
-				filters: {
-					name: ''
-				},
-				control:ListConfig.state4,
-				columns:[
-					{
-					  prop:'name',
-					  label:'姓名'
-					},
-					{
-					  prop:'sex',
-					  label:'性别',
-					},{
-					  prop:'age',
-					  label:'年龄',
-					},
-					{
-					  prop:'birth',
-					  label:'生日',
-					},
-					{
-					  prop:'addr',
-					  label:'地址'
-					}
-				],
-				listData: [],
-				total: ListConfig.total,
-				page: ListConfig.page,
-				listLoading: false
-			}
-		},
-		methods: {
-			//性别显示转换
-			handleColumn: function (data) {
-				 data.map(item=>item.sex=item.sex == 1 ?'男' : item.sex == 0 ? '女' : '未知');
-			},
-			//获取用户列表
-			getListData(page,paramsMore={}) {
-				this.listLoading = true;
-				let params={
-                      page:page?page:this.page,
-					  name: this.filters.name,
-					  ...paramsMore
-				 }
-				getUserListPage(params).then((res) => {
-					this.total = res.data.total;
-					this.handleColumn(res.data.users)
-					this.listData=res.data.users
-					this.listLoading = false;
-				});
-			}
-			
-		},
-		mounted() {
-			this.getListData();
-		}
-	}
-
+import { util } from "@/utils/util.js";
+import { getUserListPage } from "@/api/api";
+import Table from "@/components/table.vue";
+export default {
+    components: {
+        Table
+    },
+    data() {
+        return {
+            filters: {
+                name: ""
+            },
+            columns: [
+                {
+                    prop: "name",
+										label: "姓名"
+                },
+                {
+                    prop: "sex",
+										label: "性别",
+										formatter:(row,column)=>{
+				              return row.sex == 1 ? "男" : row.sex == 0 ? "女" : "未知"
+										}
+                },
+                {
+                    prop: "age",
+										label: "年龄"
+                },
+                {
+                    prop: "birth",
+										label: "生日"
+                },
+                {
+                    prop: "addr",
+										label: "地址",
+                }
+            ],
+            pagination: {
+                total: 10,
+								page: 1,
+								pageSize:20,
+								onChange:'getLoad',
+								onSizeChange:'getLoad',
+            },
+						tableData: [],
+						operation:[
+							{
+								label:'修改',
+								width:100,
+								onclick:(key,row)=>{
+                  console.log(row)
+								}
+							}
+						]
+        };
+    },
+    mounted() {
+        this.getLoad();
+    },
+    methods: {
+        //获取数据
+        getLoad(page) {
+            let params = {
+								page: this.pagination.page,
+								pageSize:this.pagination.pageSize,
+                name: this.filters.name
+            };
+            getUserListPage(params).then(res => {
+                this.pagination.total = res.data.total;
+                this.tableData = res.data.users;
+            });
+        }
+    }
+};
 </script>
 
 <style scoped>
-
 </style>

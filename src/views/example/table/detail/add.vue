@@ -27,7 +27,7 @@
 
 <script>
 	import Cascader from '@/components/cascader.vue' 
-	import { Rule } from '@/assets/js/rule.js'
+	import { Rule } from '@/utils/rule.js'
 	export default {
 		components: {
 			Cascader

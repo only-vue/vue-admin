@@ -10,7 +10,7 @@ import 'font-awesome/css/font-awesome.min.css'
 
 //util
 import './assets/css/base.css'
-import util from './assets/js/util.js'
+import util from './utils/util.js'
 
 //Vuex
 import store from './vuex/store'
@@ -34,7 +34,7 @@ import Mock from './mock'
 Mock.bootstrap();
 
 //axios
-import {post,get} from './http'
+import {post,get} from './utils/http.js'
 Vue.prototype.$post=post;
 Vue.prototype.$get=get;
 

@@ -19,8 +19,8 @@
 
 <script>
   import { requestLogin } from '@/api/api';
-  import { storage } from '@/assets/js/util.js';
-  import { Rule } from '@/assets/js/rule.js';
+  import { storage } from '@/utils/util.js';
+  import { Rule } from '@/utils/rule.js';
   export default {
     data() {
       return {

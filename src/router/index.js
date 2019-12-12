@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Router from '../router/router'
-import { storage } from '../assets/js/util.js';
+import { storage } from '../utils/util.js';
 
 import Login from '../views/login.vue'
 import No404 from '../views/404.vue'

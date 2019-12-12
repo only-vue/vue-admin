@@ -1,7 +1,7 @@
 import axios from 'axios';
-import router from './router'
+import router from '../router/router'
 import { Notification,Message,MessageBox} from 'element-ui';
-import { storage } from './assets/js/util.js';
+import { storage } from './util.js';
 
 axios.defaults.timeout = 5000;
 
