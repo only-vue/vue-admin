@@ -4,9 +4,8 @@ import App from './App'
 
 //ElementUI
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
-import 'font-awesome/css/font-awesome.min.css'
-//import './assets/theme/theme-green/index.css'
+import 'element-ui/lib/theme-chalk/index.css';
+
 
 //util
 import './assets/css/base.css'

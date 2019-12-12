@@ -1,16 +1,10 @@
 <template>
     <section>
         <!--工具条-->
-        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-            <el-form :inline="true" :model="filters">
-                <el-form-item>
-                    <el-input v-model="filters.name" placeholder="姓名"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="getListData(page)">查询</el-button>
-                </el-form-item>
-            </el-form>
-        </el-col>
+        
+				<Search
+				 :formData="formData"
+				/>
 
         <!-- 
 					tableData 数据
@@ -30,16 +24,64 @@
 <script>
 import { util } from "@/utils/util.js";
 import { getUserListPage } from "@/api/api";
+import Search from "@/components/search.vue";
 import Table from "@/components/table.vue";
 export default {
     components: {
+			  Search,
         Table
     },
     data() {
         return {
-            filters: {
-                name: ""
-            },
+            formData:[
+							{
+								prop:'name',
+								value:'', 
+								type:"input",
+								label:'姓名',
+								placeholder:'请输入姓名'
+							},
+							{
+								prop:'sex',
+								value:'', 
+								type:"select",
+								label:'性别',
+								options:[
+                  {
+										label:'男',
+										value:1
+									},
+									{
+										label:'女',
+										value:2
+									}
+								],
+								placeholder:'请选择性别'
+							},
+							{
+								prop:'date',
+								value:'', 
+								type:"date",
+								label:'日期',
+								placeholder:'请选择日期'
+							},
+							{
+								prop:'daterange',
+								value:'', 
+								type:"daterange",
+								label:'日期',
+								startPlaceholder:'开始日期',
+								endPlaceholder:'结束日期'
+							},
+							{
+								type:"button",
+								label:'搜索',
+								class:'primary',
+								onlick:(row)=>{
+                  console.log(row)
+								}
+							}
+						],
             columns: [
                 {
                     prop: "name",
@@ -89,11 +131,11 @@ export default {
     },
     methods: {
         //获取数据
-        getLoad(page) {
+        getLoad(value={}) {
             let params = {
 								page: this.pagination.page,
 								pageSize:this.pagination.pageSize,
-                name: this.filters.name
+								...value
             };
             getUserListPage(params).then(res => {
                 this.pagination.total = res.data.total;
