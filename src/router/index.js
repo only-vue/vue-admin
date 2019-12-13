@@ -12,15 +12,14 @@ let routes = [
     {
         path: '/login',
         component: Login,
-        name: '',
         hidden: true
     },
     {
         path: '/404',
         component: No404,
-        name: '',
         hidden: true
-    },
+		},
+
     ...Router.routes
 ];
 
@@ -36,7 +35,7 @@ var router =  new VueRouter({
  * 
  *  */ 
 router.beforeEach((to, from, next) => {
-    let user = JSON.parse(storage.getStorage('user'));
+    let user = storage.getStorage('user');
     if(user){
         const nextRoute = []; //'主页', '列表'
         routes.map((item,index)=>{
@@ -48,8 +47,8 @@ router.beforeEach((to, from, next) => {
             nextRoute.indexOf(item.name) >= 0?item.hidden=true:''
         })
     }
-    !user && to.path != '/login'?next({ path: '/login' }):next()
-   
+		!user && to.path != '/login'?next({ path: '/login' }):next()
+
 })  
 
 export default router;

@@ -5,10 +5,15 @@ let routes = [
         path: '/', 
         component: Layout,
         name: '主页', 
-        iconCls: 'el-icon-menu',
+				iconCls: 'el-icon-menu',
         hidden: false,
         children:[
-            { path: '/main', component: (resolve) => require(['../views/home/home.vue'], resolve), name: '主页', hidden: false }, 
+						{ 
+						 path: '/main',
+						 component: (resolve) => require(['../views/home/home.vue'], resolve), 
+						 name: '首页', 
+						 hidden: false 
+						}
         ]
       },
       
@@ -24,10 +29,12 @@ let routes = [
 							component: (resolve) => require(['../views/example/table/table1.vue'], resolve), 
 							name: '列表1', 
 							hidden: false,
-							children:[
-								{ path: 'edit', component: (resolve) => require(['../views/example/table/detail/edit.vue'], resolve), name: '编辑', hidden: true },
-								{ path: 'add', component: (resolve) => require(['../views/example/table/detail/add.vue'], resolve), name: '新增', hidden: true }
-							] 
+						},
+						{ 
+							path: '/table1/edit', 
+							component: (resolve) => require(['../views/example/table/detail/edit.vue'], resolve), 
+							name: '编辑', 
+							hidden: true 
 						}
             
           ]
@@ -49,7 +56,12 @@ let routes = [
         iconCls: 'el-icon-setting',
         hidden: false,
         children: [
-            { path: '/tab', component: (resolve) => require(['../views/example/tab/index.vue'], resolve), name: 'tab切换', hidden: false }
+            { 
+							path: '/tab', 
+							component: (resolve) => require(['../views/example/tab/index.vue'], resolve),
+							name: 'tab', 
+							hidden: false 
+						}
            
         ]
      },

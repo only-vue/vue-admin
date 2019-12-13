@@ -43,7 +43,7 @@ Vue.use(util)
 Vue.use(Vuex)
 
 
-
+Vue.config.productionTip = false;
 
 new Vue({
   //el: '#app',

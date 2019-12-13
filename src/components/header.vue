@@ -64,7 +64,7 @@
     },
 		props:['collapsed'],
     mounted() {
-			this.user = JSON.parse(storage.getStorage('user'));
+			this.user = storage.getStorage('user');
     },
     methods: {
 			//退出登录

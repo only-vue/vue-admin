@@ -120,7 +120,8 @@ export default {
 								label:'修改',
 								width:100,
 								onclick:(key,row)=>{
-                  console.log(row)
+									console.log(1)
+                  this.$router.push('/table1/edit')
 								}
 							}
 						]

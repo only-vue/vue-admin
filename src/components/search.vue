@@ -4,7 +4,7 @@
             <el-form-item
                 v-for="(item,index) in formData"
                 :key="index"
-                :label="item.type!=='button'&&(item.label&&item.label)"
+                :label="item.type!=='button'?(item.label&&item.label):''"
             >
                 <template v-if="item.type==='input'">
                     <el-input v-model="item.value" :placeholder="item.placeholder" />

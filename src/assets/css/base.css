@@ -32,6 +32,7 @@ a{
 }
 .el-table__row a{
 	color: #20a0ff;
+	cursor: pointer;
 }
 .el-table__row a:hover{
 	color: #20a0ff;
