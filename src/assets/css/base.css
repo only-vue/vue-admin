@@ -1,42 +1,69 @@
-a{
-	text-decoration: none;
+a {
+  text-decoration: none;
 }
 
-.form{
-    margin:20px;
-    width:60%;
-    min-width:300px;
+.form {
+  margin: 20px;
+  width: 60%;
+  min-width: 300px;
 }
 
 .area-select .area-selected-trigger {
-    padding: 0 20px 7px 12px!important;
-}
-.cascader-menu-list .cascader-menu-option.selected{
-    color: #20a0ff!important;
-}
-.area-select.large,.el-date-editor.el-input,.el-select{
-    width: 100%!important;
+  padding: 0 20px 7px 12px !important;
 }
 
-.el-date-picker{
-    width: 300px!important;
+.cascader-menu-list .cascader-menu-option.selected {
+  color: #20a0ff !important;
 }
 
-.dialog-footer{
-    float: right;
-    margin-bottom: 20px;
+.area-select.large,
+.el-date-editor.el-input,
+.el-select {
+  width: 100% !important;
 }
-.el-pagination{
-	margin: 20px 0;
-	text-align: center;
+
+.el-date-picker {
+  width: 300px !important;
 }
-.el-table__row a{
-	color: #20a0ff;
-	cursor: pointer;
+
+.dialog-footer {
+  float: right;
+  margin-bottom: 20px;
 }
-.el-table__row a:hover{
-	color: #20a0ff;
+
+.el-pagination {
+  margin: 20px 0;
+  text-align: center;
 }
-.el-table__row :visited{
-	color: #20a0ff;
+
+.el-table__row a {
+  color: #20a0ff;
+  cursor: pointer;
+}
+
+.el-table__row a:hover {
+  color: #20a0ff;
+}
+
+.el-table__row :visited {
+  color: #20a0ff;
+}
+
+.el-form-item {
+  position: relative;
+}
+
+.el-pic {
+  position: absolute;
+  right: 0;
+  top: 0;
+  right: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.el-pic img {
+  width: 60px;
 }

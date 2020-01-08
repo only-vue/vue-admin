@@ -38,7 +38,7 @@ export default {
                         }
                     ],
                     placeholder: "请选择性别"
-								},
+                },
                 {
                     prop: "sex",
                     value: "1",
@@ -62,8 +62,8 @@ export default {
                     type: "date",
                     label: "活动日期",
                     placeholder: "请选择活动日期"
-								},
-								{
+                },
+                {
                     prop: "checkbox",
                     value: ["1"],
                     type: "checkbox",
@@ -79,20 +79,26 @@ export default {
                         }
                     ],
                     placeholder: "请选择性别"
-								},
-								{
+                },
+                {
                     prop: "switch",
                     value: true,
                     type: "switch",
-										label: "是否支撑"
-								},
-								{
+                    label: "是否支撑"
+                },
+                {
                     prop: "upload",
-                    value: '',
-										type: "upload",
-										multiple:true,
-										label: "图片上传"
-								},
+                    value: "",
+                    type: "upload",
+                    multiple: true,
+                    label: "图片上传"
+                },
+                {
+                    prop: "editor",
+                    value: "",
+                    type: "editor",
+                    label: "文本内容"
+                }
             ],
             rulesData: {
                 name: [Rule.checkDataNull("姓名不能为空", "blur")],

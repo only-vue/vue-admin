@@ -6,8 +6,16 @@
             :label="item.label&&item.label"
             :prop="item.prop&&item.prop"
         >
-            <template v-if="item.type==='input'">
-                <el-input v-model.trim="rules[item.prop]" :placeholder="item.placeholder" />
+            <template v-if="item.type==='input'||item.type==='password'">
+                <el-input
+                    :type="item.type"
+                    v-model.trim="rules[item.prop]"
+                    :placeholder="item.placeholder"
+                    :disabled="item.disabled&&item.disabled"
+                />
+                <div class="el-pic" v-if="item.picCode" @click="item.click(rules[item.prop])">
+                    <img :src="item.picCode" />
+                </div>
             </template>
             <template v-if="item.type==='select'">
                 <el-select v-model="rules[item.prop]" :placeholder="item.placeholder">
@@ -19,20 +27,24 @@
                     ></el-option>
                 </el-select>
             </template>
-						<template v-if="item.type==='radio'">
+            <template v-if="item.type==='radio'">
                 <el-radio-group v-model="rules[item.prop]">
-									<el-radio :label="option.value" v-for="option in item.options" :key="option.label">
-										{{option.label}}
-									</el-radio>
-								</el-radio-group>
-						</template>
-						<template v-if="item.type==='checkbox'&&rules[item.prop]">
+                    <el-radio
+                        :label="option.value"
+                        v-for="option in item.options"
+                        :key="option.label"
+                    >{{option.label}}</el-radio>
+                </el-radio-group>
+            </template>
+            <template v-if="item.type==='checkbox'&&rules[item.prop]">
                 <el-checkbox-group v-model="rules[item.prop]">
-									<el-checkbox :label="option.value" v-for="option in item.options" :key="option.label">
-										{{option.label}}
-									</el-checkbox>
-								</el-checkbox-group>
-						</template>
+                    <el-checkbox
+                        :label="option.value"
+                        v-for="option in item.options"
+                        :key="option.label"
+                    >{{option.label}}</el-checkbox>
+                </el-checkbox-group>
+            </template>
             <template v-if="item.type==='date'">
                 <el-date-picker
                     v-model="rules[item.prop]"
@@ -51,52 +63,62 @@
                     value-format="yyyy-MM-dd"
                 />
             </template>
-						<template v-if="item.type==='switch'">
+            <template v-if="item.type==='switch'">
                 <el-switch
-									v-model="rules[item.prop]"
-									:active-text="item.activeText&&item.activeText"
-									:inactive-text="item.inactiveText&&item.inactiveText"
-									/>
+                    v-model="rules[item.prop]"
+                    :active-text="item.activeText&&item.activeText"
+                    :inactive-text="item.inactiveText&&item.inactiveText"
+                />
             </template>
-							<template v-if="item.type==='upload'">
-                <Upload 
-								 :loadData="{ 
+            <template v-if="item.type==='upload'">
+                <Upload
+                    :uploadData="{ 
                     multiple:item.multiple,
-										list:[]
+										list:rules[item.prop]?rules[item.prop]:[]
 								  }"
-								/>
+                />
+            </template>
+            <template v-if="item.type==='editor'">
+                <Editor :editorData="rules[item.prop]" @onChange="value=>{rules[item.prop]=value}" />
             </template>
             <template v-if="item.type==='button'">
                 <el-button :type="item.class" @click="item.onlick(formData)">{{item.label}}</el-button>
             </template>
         </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="handleSubmit('form')">立即创建</el-button>
-            <el-button>取消</el-button>
+        <el-form-item class="btns">
+            <el-button
+                v-for="(item,index) in formBtns"
+                :key="index"
+                :type="item.type&&item.type"
+                @click="item.isVerify?handleSubmit('form'):item.click()"
+            >{{item.label}}</el-button>
         </el-form-item>
     </el-form>
 </template>
 <script>
 import { Rule } from "@/utils/rule.js";
 import Upload from "@/components/upload.vue";
+import Editor from "@/components/editor.vue";
 export default {
-	components: {
-        Upload
+    components: {
+        Upload,
+        Editor
     },
     data() {
         return {
+            datas: {},
             rules: {}
         };
     },
-		props: ["formData", "rulesData"],
-		watch:{
-			 rules: {
-				handler(news,old) {
-					console.log(news)
-				},
-				deep: true
-			}
-		},
+    props: ["formData", "rulesData", "formBtns"],
+    watch: {
+        rules: {
+            handler(news, old) {
+                this.datas = news;
+            },
+            deep: true
+        }
+    },
     mounted() {
         this.getRules();
     },
@@ -105,15 +127,17 @@ export default {
         getRules() {
             if (this.formData.length > 0) {
                 this.formData.forEach(item => {
-								  	this.rules= Object.assign({}, this.rules, {[item.prop]: item.value?item.value:''})
+                    this.rules = Object.assign({}, this.rules, {
+                        [item.prop]: item.value ? item.value : ""
+                    });
                 });
-						}
+            }
         },
         //提交
         handleSubmit(form) {
             this.$refs[form].validate(valid => {
                 if (valid) {
-                    alert("submit!");
+                    this.$emit("handleSubmit", this.datas);
                 }
             });
         }
